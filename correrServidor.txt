@@ -1,0 +1,3 @@
+php -S localhost:8000
+
+control + f para agarrar hartas lineas y cambiarlas de una
