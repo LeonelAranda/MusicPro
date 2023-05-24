@@ -1,3 +1,4 @@
 php -S localhost:8000
+http://localhost/MusicPro/public/index.php
 
 control + f para agarrar hartas lineas y cambiarlas de una
