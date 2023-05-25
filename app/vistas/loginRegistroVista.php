@@ -1,10 +1,11 @@
 <?php include_once("encabezado.php"); ?>
 
 <h2 class="text-center">Registro</h2>
-<form action="login/registro" method="POST">
+<form action="<?php print RUTA; ?>login/registro" method="POST">
     <div class="form-group text-left">
         <label for="nombre">* Nombre:</label>
-        <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Escriba su nombre" required>
+        <input type="text" name="nombre" id="nombre" class="form-control" required placeholder="Escriba su nombre" value='<?php isset($datos["data"]["nombre"]) ? print $datos["data"]["nombre"] : "";
+                                                                                                                            ?>' />
     </div>
 
     <div class="form-group text-left">
@@ -13,13 +14,13 @@
     </div>
 
     <div class="form-group text-left">
-        <label for="apellidoMaterno">* Apellido Paterno:</label>
+        <label for="apellidoMaterno">* Apellido Materno:</label>
         <input type="text" name="apellidoMaterno" id="apellidoMaterno" class="form-control" placeholder="Escriba su apellido materno">
     </div>
 
     <div class="form-group text-left">
-        <label for="correo">* Correo electrónico:</label>
-        <input type="email" name="correo" id="correo" class="form-control" placeholder="Escriba su correo" required>
+        <label for="email">* Correo electrónico:</label>
+        <input type="email" name="email" id="email" class="form-control" placeholder="Escriba su correo" required>
     </div>
 
     <div class="form-group text-left">
@@ -55,6 +56,7 @@
     <div class="form-group text-left">
         <label for="enviar"></label>
         <input type="submit" value="Enviar datos" id="pais" class="btn btn-success" role="button">
+        <a href="<?php print RUTA; ?>login/" class="btn btn-info">Cancelar</a>
     </div>
 
 </form>

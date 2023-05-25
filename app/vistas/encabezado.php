@@ -15,12 +15,27 @@
 
 <body>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <a href="index.php" class="navbar-brand">MusicPro</a>
+        <a href="<?php print RUTA; ?>" class="navbar-brand">MusicPro</a>
         <?php if ($datos["menu"]) {
             # menu
-        } ?>
+        }
+        ?>
     </nav>
     <div class="container-fluid">
         <div class="row content ">
             <div class="col-sm-2"></div>
             <div class="col-sm-8">
+                <?php
+                if (isset($datos["errores"])) {
+                    if (count($datos["errores"]) > 0) {
+                        print "<div class='alert alert-danger mt-2'>";
+                        foreach ($datos["errores"] as $key => $valor) {
+                            print "<strong>* " . $valor . "</strong>";
+                        }
+                        print "</div>";
+                    }
+                }
+
+
+
+                ?>

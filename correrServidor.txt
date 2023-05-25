@@ -2,3 +2,10 @@ php -S localhost:8000
 http://localhost/MusicPro/public/index.php
 
 control + f para agarrar hartas lineas y cambiarlas de una
+
+para acrtualizar cambios en el proyecto
+
+git status
+git add .
+git commit -m "comentario"
+git push -u origin main

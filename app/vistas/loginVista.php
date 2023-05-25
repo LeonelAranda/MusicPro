@@ -2,7 +2,7 @@
 
 <h1 class="text-center">Ingresar</h1>
 <div class="card p-4 bg-light">
-    <form action="login/verifica/" method="POST">
+    <form action="<?php print RUTA; ?>login/verifica" method="POST">
         <div class="form-group text-left">
             <label for="usuario">Usuario:</label>
             <input type="text" name="usuario" class="form-control">
@@ -23,7 +23,7 @@
 
     </form>
 </div> <!--card-->
-<a href="login/alta/">Registrate</a> <br>
-<a href="login/olvido/">¿Olvidaste tu contraseña?</a>
+<a href="<?php print RUTA; ?>login/registro">Registrate</a> <br>
+<a href="<?php print RUTA; ?>login/olvido/">¿Olvidaste tu contraseña?</a>
 
 <?php include_once("piepagina.php"); ?>
