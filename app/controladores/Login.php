@@ -299,6 +299,7 @@ class Login extends Controlador
             $errores = $this->modelo->verificar($usuario, $clave);
             //recuerdame
 
+            $valor = $usuario . "|" . $clave;
             if ($recordar == "on") {
                 $valor = $usuario . "|" . $clave;
                 $fecha = time() + (60 * 60 * 24 * 7);
@@ -328,8 +329,8 @@ class Login extends Controlador
                     "errores" => $errores,
                     "data" => $data
                 ];
-                //$this->vista("loginVista", $datos);
-                header("location:" . RUTA . "tienda");
+                $this->vista("loginVista", $datos);
+                //header("location:" . RUTA . "tienda");
             }
         }
     }
