@@ -16,6 +16,8 @@ class LoginModelo
 
         if ($this->validaCorreo($data["email"])) {
             $clave = hash_hmac("sha512", $data["clave1"], "mimamamemima");
+            //$clave = $data["clave1"];
+
             $sql = "INSERT INTO usuarios VALUES(0,";
             $sql .= "'" . $data["nombre"] . "',";
             $sql .= "'" . $data["apellidoPaterno"] . "',";
@@ -30,10 +32,67 @@ class LoginModelo
         }
         return $r;
     }
+
+    function cambiarClaveAcceso($id, $clave)
+    {
+        $r = false;
+
+        $clave = hash_hmac("sha512", $clave, "mimamamemima");
+        $sql = "UPDATE  usuarios SET";
+        $sql .= "clave=" . "$clave" . "')";
+        $sql .= "WHERE id=" . $id;
+        $r = $this->db->queryNoSelect($sql);
+
+        return $r;
+    }
+
     function validaCorreo($email)
     {
         $sql = "SELECT * FROM usuarios WHERE email='" . $email . "'";
         $data = $this->db->query($sql);
         return (count($data) == 0) ? true : false;
+    }
+
+    function verificar($usuario, $clave)
+    {
+        $errores = array();
+        $sql = "SELECT * FROM usuarios WHERE email='" . $usuario . "'";
+        $clave = hash_hmac("sha512", $clave, "mimamamemima");
+        $clave = substr($clave, 0, 200);
+        //consulta
+        $data = $this->db->query($sql);
+        //validacion
+        if (empty($data)) {
+            array_push($errores, "No existe el usuario");
+        } else if ($clave != $data["clave"]) {
+            array_push($errores, "contraseña erronea");
+        }
+
+        return $errores;
+    }
+
+    function getUsuarioCorreo($email)
+    {
+        $sql = "SELECT * FROM usuarios WHERE email='" . $email . "'";
+        $data = $this->db->query($sql);
+        return $data;
+    }
+
+    function enviarCorreo($email)
+    {
+        $data = $this->getUsuarioCorreo($email);
+        $id = $data["id"];
+        $nombre = $data["nombre"] . " " . $data["apellidoPaterno"] . " " . $data["apellidoMaterno"];
+        $msg = $nombre . ",entra a ll siguiente link para cambiar tu contraseña <br>";
+        $msg .= "<a href='" . RUTA . "/login/cambiaclave/" . $id . "'>cambia tu contraseña</a>";
+
+        $headers = "MIME-Version: 1.0\r\n";
+        $headers .= "Content-type:text/html; charset=UTF-8\r\n";
+        $headers .= "From: MusicPro";
+        $headers .= "Reply-to: picapiedra@gmail.com\r\n";
+
+        $asunto = "Cambiar contraseña";
+
+        return @mail($email, $asunto, $msg, $headers);
     }
 }

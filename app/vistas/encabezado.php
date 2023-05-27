@@ -30,7 +30,7 @@
                     if (count($datos["errores"]) > 0) {
                         print "<div class='alert alert-danger mt-2'>";
                         foreach ($datos["errores"] as $key => $valor) {
-                            print "<strong>* " . $valor . "</strong>";
+                            print "<strong>* " . $valor . "</strong> <br> ";
                         }
                         print "</div>";
                     }
