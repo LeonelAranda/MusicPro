@@ -16,10 +16,21 @@
 <body>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <a href="<?php print RUTA; ?>" class="navbar-brand">MusicPro</a>
-        <?php if ($datos["menu"]) {
-            # menu
-        }
-        ?>
+        <div class="collapse navbar-collapse" id="menu">
+            <?php if ($datos["menu"]) {
+                # menu
+            }
+            if (isset($datos["admon"])) {
+                if ($datos["admon"]) {
+                    print "<ul class='navbar-nav mr-auto mt-2 mt-lg-0'>";
+                    print "<li class='nav-item'>";
+                    print "<a href='" . RUTA . "admonUsuarios' class='nav-link'>Usuarios</a>";
+                    print "</li>";
+                    print "</ul>";
+                }
+            }
+            ?>
+        </div>
     </nav>
     <div class="container-fluid">
         <div class="row content ">
@@ -28,7 +39,7 @@
                 <?php
                 if (isset($datos["errores"])) {
                     if (count($datos["errores"]) > 0) {
-                        print "<div class='alert alert-danger mt-2'>";
+                        print "<div class='alert alert-danger mt-3'>";
                         foreach ($datos["errores"] as $key => $valor) {
                             print "<strong>* " . $valor . "</strong> <br> ";
                         }

@@ -288,8 +288,6 @@ class Login extends Controlador
     }
     function verifica()
     {
-
-
         $errores = array();
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -297,6 +295,10 @@ class Login extends Controlador
             $clave = isset($_POST["clave"]) ? $_POST["clave"] : "";
             $recordar = isset($_POST["recordar"]) ? "on" : "off";
             $errores = $this->modelo->verificar($usuario, $clave);
+
+            //para revisar entrara
+            var_dump($usuario);
+            var_dump($clave);
             //recuerdame
 
             $valor = $usuario . "|" . $clave;

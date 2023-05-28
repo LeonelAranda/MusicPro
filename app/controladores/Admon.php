@@ -17,4 +17,14 @@ class Admon extends Controlador
         ];
         $this->vista("admonVista", $datos);
     }
+    public function verifica()
+    {
+        $datos = [
+            "titulo" => "Administrativo Inicio",
+            "menu" => false,
+            "admon" => true,
+            "data" => []
+        ];
+        $this->vista("admonInicioVista", $datos);
+    }
 }
