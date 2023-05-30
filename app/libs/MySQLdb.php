@@ -40,11 +40,30 @@ class MySQLdb
     {
         $data = array();
         $r = mysqli_query($this->conn, $sql);
-        if (mysqli_num_rows($r) > 0) {
-            $data = mysqli_fetch_assoc($r);
+        if ($r) {
+            if (mysqli_num_rows($r) > 0) {
+                $data = mysqli_fetch_assoc($r);
+            }
         }
+
         return $data;
     }
+
+    function querySelect($sql)
+    {
+        $data = array();
+        $r = mysqli_query($this->conn, $sql);
+        if ($r) {
+            while ($row = mysqli_fetch_assoc($r)) {
+                array_push($data, $row);
+            }
+        } else {
+            $data = array();
+        }
+
+        return $data;
+    }
+
 
     //Query regresa un valor booleano
     function queryNoSelect($sql)

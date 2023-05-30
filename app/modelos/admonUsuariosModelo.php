@@ -26,4 +26,45 @@ class AdmonUsuariosModelo
         $sql .= "(NOW()))"; // fecha ultimo login
         return $this->db->queryNoSelect($sql);
     }
+
+    public function getUsuarios()
+    {
+        $sql = "SELECT * FROM admon WHERE baja=0";
+        $data = $this->db->querySelect($sql);
+        return $data;
+    }
+
+    public function getLlaves($tipo)
+    {
+        $sql = "SELECT * FROM llaves WHERE tipo='" . $tipo . "' ORDER BY indice DESC";
+        $data = $this->db->querySelect($sql);
+        return $data;
+    }
+
+    public function getUsuarioId($id)
+    {
+        $sql = "SELECT * FROM admon WHERE id=" . $id;
+        $data = $this->db->querySelect($sql);
+        return $data;
+    }
+
+    public function modificaUsuario($data)
+    {
+        $errores = array();
+        $sql = "UPDATE admon SET ";
+        $sql .= "correo='" . $data["correo"] . "',";
+        $sql .= "nombre='" . $data["nombre"] . "',";
+        $sql .= "modificado_dt=(NOW()),";
+        $sql .= "status=" . $data["status"];
+
+        if (!empty($data['clave1'] && !empty($data['clave2']))) {
+            $clave = hash_hmac("sha512", $data["clave1"], LLAVE);
+            $sql .= ", clave='" . $clave . "'";
+        }
+        $sql .= "WHERE id=" . $data["id"];
+        if (!$this->db->queryNoSelect($sql)) {
+            array_push($errores, "Existió un error al actualizar el registro.");
+        }
+        return $errores;
+    }
 }

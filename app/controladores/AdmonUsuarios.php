@@ -10,13 +10,23 @@ class AdmonUsuarios extends Controlador
     }
     public function caratula()
     {
-        $datos = [
-            "titulo" => "Administrativo Usuarios",
-            "menu" => false,
-            "admon" => true,
-            "data" => []
-        ];
-        $this->vista("admonUsuariosCaratulaVista", $datos);
+        //creamos la sesion
+        $sesion = new Sesion();
+
+        if ($sesion->getLogin()) {
+
+            //Leemos los datos de la tabla
+            $data = $this->modelo->getUsuarios();
+            $datos = [
+                "titulo" => "Administrativo Usuarios",
+                "menu" => false,
+                "admon" => true,
+                "data" => $data
+            ];
+            $this->vista("admonUsuariosCaratulaVista", $datos);
+        } else {
+            header("location:" . RUTA . "admon");
+        }
     }
 
     public function alta()
@@ -57,9 +67,21 @@ class AdmonUsuarios extends Controlador
             //verificamos que no haya errores
             if (empty($errores)) {
                 if ($this->modelo->insertarDatos($data)) {
-                    # code...
+                    header("location:" . RUTA . "admonUsuarios");
                 } else {
-                    # code...
+                    $datos = [
+                        "titulo" => "Error en el registro",
+                        "menu" => false,
+                        "errores" => [],
+                        "data" => [],
+                        "subtitulo" => "Error en el registro",
+                        "texto" => "Existe un error en el registro, posiblemente su correo ya está en nuestra base de datos.",
+                        "color" => "alert-danger",
+                        "url" => "admonInicio",
+                        "colorBoton" => "btn-danger",
+                        "textoBoton" => "volver"
+                    ];
+                    $this->vista("mensajeVista", $datos);
                 }
             } else {
                 $datos = [
@@ -88,8 +110,82 @@ class AdmonUsuarios extends Controlador
         print "Usuarios admon baja";
     }
 
-    public function cambio()
-    {
-        print "Usuarios admon cambio";
+    public function cambio($id = "")
+    { //Definiendo arreglos
+        $errores = array();
+        $data = array();
+
+        //Recibiendo de la vista
+
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
+            //Limpiando variable
+
+            $id = isset($_POST['id']) ? $_POST['id'] : "";
+            $correo = isset($_POST['correo']) ? $_POST['correo'] : "";
+            $clave1 = isset($_POST['clave1']) ? $_POST['clave1'] : "";
+            $clave2 = isset($_POST['clave2']) ? $_POST['clave2'] : "";
+            $nombre = isset($_POST['nombre']) ? $_POST['nombre'] : "";
+            $status = isset($_POST['status']) ? $_POST['status'] : "";
+
+            var_dump($_POST);
+
+            //Validacion
+            if (empty($correo)) {
+                array_push($errores, "El usuario es requerido.");
+            }
+
+            if (empty($nombre)) {
+                array_push($errores, "El nombre de usuario es requerido.");
+            }
+
+            if ($status == "void") {
+                array_push($errores, "Selecciona el status del usuario.");
+            }
+            if (!empty($clave1) && !empty($clave2)) {
+                if ($clave1 != $clave2) {
+                    array_push($errores, "Las contraseñas no coinciden.");
+                }
+            }
+
+            if (empty($errores)) {
+
+
+
+                //crear arreglo de datos
+
+                $data = [
+                    "id" => $id,
+                    "nombre" => $nombre,
+                    "clave1" => $clave1,
+                    "clave2" => $clave2,
+                    "status" => $status,
+                    "correo" => $correo,
+                ];
+                //Enviamos al modelo
+                $errores = $this->modelo->modificaUsuario($data);
+
+                //Validamos la insercion
+
+                if (empty($errores)) {
+                    header("location:" . RUTA . "admonUsuarios");
+                }
+            }
+        }
+        echo "Valor de \$id recibido mediante echo: " . $id;
+        var_dump($id);
+
+        $data = $this->modelo->getUsuarioId($id);
+        $llaves = $this->modelo->getLlaves("admonStatus");
+        $datos = [
+            "titulo" => "Administrativo Usuarios Modifica",
+            "menu" => false,
+            "admon" => true,
+            "status" => $llaves,
+            "errores" => $errores,
+            "data" => $data
+        ];
+
+        $this->vista("admonUsuariosModificaVista", $datos);
     }
 }
