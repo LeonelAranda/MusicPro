@@ -21,6 +21,14 @@ class AdmonProductosModelo
         $data = $this->db->querySelect($sql);
         return $data;
     }
+    public function getCatalogo()
+    {
+        $sql = "SELECT id, nombre, tipo FROM productos ";
+        $sql .= "WHERE baja=0 AND status!=0 ";
+        $sql .= " ORDER BY tipo, nombre";
+        $data = $this->db->querySelect($sql);
+        return $data;
+    }
 
     public function getLlaves($tipo)
     {
@@ -51,5 +59,27 @@ class AdmonProductosModelo
         $errores = array();
 
         return $errores;
+    }
+
+    public function altaProducto($data)
+    {
+        $sql = "INSERT INTO productos VALUES(0,"; //id
+        $sql .= "'" . $data['tipo'] . "',"; //tipo
+        $sql .= "'" . $data['nombre'] . "',"; //nombre
+        $sql .= "'" . $data['descripcion'] . "',"; //descripcion
+        $sql .= "'" . $data['marca'] . "',"; //marca
+        $sql .=  $data['precio'] . ","; //precio
+        $sql .=  $data['descuento'] . ","; //descuento
+        $sql .=  $data['envio'] . ","; //envio
+        $sql .= "'" . $data['imagen'] . "',"; //imagen
+        $sql .= "'" . $data['fecha'] . "',"; //fecha
+        $sql .= "'" . $data['status'] . "',"; //status
+        $sql .= "0, "; //baja
+        $sql .= "(NOW()), "; //creado_dt
+        $sql .= "'', "; //creado_dt
+        $sql .= "'') "; //baja_dt
+
+        print $sql;
+        return $this->db->queryNoSelect($sql);
     }
 }
