@@ -15,10 +15,11 @@ class Tienda extends Controlador
     {
         $sesion = new Sesion();
         if ($sesion->getLogin()) {
-            var_dump($sesion->getUsuario()); //para verificar que devuelve datos
+            //var_dump($sesion->getUsuario()); //para verificar que devuelve datos
             $datos = [
                 "titulo" => "Bienvenido a MusicPro",
-                "menu" => false
+                "activo" => "cuerda",
+                "menu" => true
             ];
             $this->vista("tiendaVista", $datos);
         } else {

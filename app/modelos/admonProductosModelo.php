@@ -37,7 +37,7 @@ class AdmonProductosModelo
         return $data;
     }
 
-    public function getProductosId($id)
+    public function getProductoId($id)
     {
         $sql = "SELECT * FROM productos WHERE id=" . $id;
         $data = $this->db->querySelect($sql);
@@ -46,19 +46,39 @@ class AdmonProductosModelo
 
     public function bajaLogica($id)
     {
-        $errores = array();
+        $salida = true;
         $sql = "UPDATE productos admon SET baja=1, baja_dt=(NOW()) WHERE id = " . $id;
         if (!$this->db->queryNoSelect($sql)) {
-            array_push($errores, "Error al modificar el registro para baja.");
+            $salida = false;
         }
-        return $errores;
+        return $salida;
     }
 
     public function modificaProductos($data)
     {
-        $errores = array();
+        $salida = false;
+        if (empty($data["id"])) {
+            $sql = "UPDATE productos SET "; //id
+            $sql .= "tipo='" . $data['tipo'] . "', "; //tipo
+            $sql .= "nombre='" . $data['nombre'] . "', "; //nombre
+            $sql .= "descripcion='" . $data['descripcion'] . "', "; //descripcion
+            $sql .= "marca='" . $data['marca'] . "', "; //marca
+            $sql .=  "precio=" . $data['precio'] . ", "; //precio
+            $sql .=  "descuento=" . $data['descuento'] . ", "; //descuento
+            $sql .= "envio=" . $data['envio'] . ", "; //envio
+            $sql .= "imagen='" . $data['imagen'] . "', "; //imagen
+            $sql .= "fecha='" . $data['fecha'] . "', "; //fecha
+            $sql .= "status='" . $data['status'] . "', "; //status
+            $sql .= "baja=0, "; //baja
+            //$sql .= "(NOW()), "; //creado_dt
+            $sql .= "modificado_dt=(NOW()), "; //modificado_dt
+            //$sql .= "'') "; //baja_dt
+            $sql .= "WHERE id=" . $data['id'];
 
-        return $errores;
+            //enviamos a la base de datos
+            $salida = $this->db->queryNoSelect($sql);
+        }
+        return $salida;
     }
 
     public function altaProducto($data)

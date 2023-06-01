@@ -43,10 +43,9 @@
         </div>
 
         <div class="form-group text-left">
-            <input type="hidden" id="id" name="id" value="<?php print $datos['data']['id']; ?>" />
-
             <input type="submit" value="Enviar" class="btn btn-success">
             <a href="<?php print RUTA; ?>admonUsuarios" class="btn btn-info">Volver</a>
+            <input type="hidden" id="id" name="id" value="<?php print $datos['data']['id']; ?>" />
         </div>
     </form>
 </div> <!--card-->

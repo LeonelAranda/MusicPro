@@ -18,7 +18,59 @@
         <a href="<?php print RUTA; ?>" class="navbar-brand">MusicPro</a>
         <div class="collapse navbar-collapse" id="menu">
             <?php if ($datos["menu"]) {
-                # menu
+                print "<ul class='navbar-nav mr-auto mt-2 mt-lg-0'>";
+                print "<li class='nav-item'>";
+                print "<a href='" . RUTA . "cuerda' class='nav-link ";
+                if (isset($datos["activo"]) && $datos["activo"] == "cuerda") print "active";
+                print "'>Cuerda</a>";
+                print "</li>";
+                //
+
+                print "<li class='nav-item'>";
+                print "<a href='" . RUTA . "percusion' class='nav-link ";
+                if (isset($datos["activo"]) && $datos["activo"] == "percusion") print "active";
+                print "'>Percusion</a>";
+                print "</li>";
+
+                print "<li class='nav-item'>";
+                print "<a href='" . RUTA . "amplificadores' class='nav-link ";
+                if (isset($datos["activo"]) && $datos["activo"] == "amplificadores") print "active";
+                print "'>Amplificadores</a>";
+                print "</li>";
+
+                print "<li class='nav-item'>";
+                print "<a href='" . RUTA . "cajas' class='nav-link ";
+                if (isset($datos["activo"]) && $datos["activo"] == "cajas") print "active";
+                print "'>Cajas</a>";
+                print "</li>";
+
+                print "<li class='nav-item'>";
+                print "<a href='" . RUTA . "accesoriosvarios' class='nav-link ";
+                if (isset($datos["activo"]) && $datos["activo"] == "accesoriosvarios") print "active";
+                print "'>Accesorios Varios</a>";
+                print "</li>";
+
+                print "<li class='nav-item'>";
+                print "<a href='" . RUTA . "sobrenosotros' class='nav-link ";
+                if (isset($datos["activo"]) && $datos["activo"] == "sobrenosotros") print "active";
+                print "'>Sobre nosotros</a>";
+                print "</li>";
+
+                print "<li class='nav-item'>";
+                print "<a href='" . RUTA . "contacto' class='nav-link ";
+                if (isset($datos["activo"]) && $datos["activo"] == "contacto") print "active";
+                print "'>Contacto</a>";
+                print "</li>";
+                print "</ul>";
+                //
+                print "<ul class='nav navbar-nav navbar-right'>";
+                //
+                print "<li class='nav-item'>";
+                print "<a href='" . RUTA . "logout' class='nav-link ";
+                if (isset($datos["activo"]) && $datos["activo"] == "cerrarsesion") print "active";
+                print "'>Cerrar sesion</a>";
+                print "</li>";
+                print "</ul>";
             }
             if (isset($datos["admon"])) {
                 if ($datos["admon"]) {

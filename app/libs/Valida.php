@@ -30,7 +30,7 @@ class Valida
 
     public static function archivo($cadena)
     {
-        $buscar  = array(' ', '*', '!', '@', '?', 'á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'í', 'ó', 'Ú', 'ñ', 'Ñ', 'Ü', 'ü');
+        $buscar  = array(' ', '*', '!', '@', '?', 'á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'í', 'ó', 'Ú', 'ñ', 'Ñ', 'Ü', 'ü', '¿', '¡');
         $reemplazar = array('-', '', '', '', '', 'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U', 'n', 'N', 'U', 'u');
         $cadena = str_replace($buscar, $reemplazar, $cadena);
         return $cadena;

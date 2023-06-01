@@ -55,7 +55,9 @@ class AdmonProductos extends Controlador
 
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
+
             //Recibimos la información PHP7
+            $id = $_POST['id'] ?? ""; //si existe id es una modificacion, si no existe es un alta
             $tipo = $_POST['tipo'] ?? "";
             $nombre = Valida::cadena($_POST['nombre'] ?? "");
             $marca = Valida::cadena($_POST['marca'] ?? "");
@@ -88,6 +90,13 @@ class AdmonProductos extends Controlador
                 array_push($errores, "La fecha no puede ser mayor a la fecha actual.");
             }
 
+            if (empty($imagen)) {
+                array_push($errores, "Se debe seleccionar una imagen.");
+            } else {
+                # code...
+            }
+
+
             if (Valida::archivoImagen($_FILES['imagen']['tmp_name'])) {
                 //Cambiar nombre del archivo
                 $imagen = Valida::archivo($nombre);
@@ -112,6 +121,7 @@ class AdmonProductos extends Controlador
             //Crear arreglo de datos
             $data = [
 
+                "id" => $id,
                 "tipo" => $tipo,
                 "nombre" => $nombre,
                 "descripcion" => $descripcion,
@@ -123,6 +133,7 @@ class AdmonProductos extends Controlador
                 "status" => $status,
                 "imagen" => $imagen
 
+
             ];
 
 
@@ -130,13 +141,23 @@ class AdmonProductos extends Controlador
             if (empty($errores)) {
 
                 //Enviamos al modelo
-                if ($this->modelo->altaProducto($data)) {
+                if ($id == "") {
+                    //alta
+                    if ($this->modelo->altaProducto($data)) {
+                        header("location:" . RUTA . "admonProductos");
+                    }
+                } else {
+                    //Modificacion
+                    if ($this->modelo->modificaProducto($data)) {
+                        header("location:" . RUTA . "admonProductos");
+                    }
                 }
             }
         }
         //vista alta
         $datos = [
             "titulo" => "Administrativo Productos Alta",
+            "subtitulo" => "Alta de producto",
             "menu" => false,
             "admon" => true,
             "errores" => $errores,
@@ -145,6 +166,73 @@ class AdmonProductos extends Controlador
             "catalogo" => $catalogo,
             "data" => $data
         ];
+        var_dump($data);
         $this->vista("admonProductosAltaVista", $datos);
+    }
+    public function cambio($id = "")
+    {
+        //Leemos las llaves del producto
+        $llaves = $this->modelo->getLlaves("tipoProducto");
+
+        //Leemos los estatus del producto
+        $statusProducto = $this->modelo->getLlaves("statusProducto");
+
+        //Leemos los catalogos del producto
+        $catalogo = $this->modelo->getCatalogo();
+
+        //Leemos los datos del registro del id
+        $data = $this->modelo->getProductoId($id);
+
+        //vista alta
+        $datos = [
+            "titulo" => "Administrativo Productos modificar",
+            "subtitulo" => "Modificación de producto",
+            "menu" => false,
+            "admon" => true,
+            "errores" => [],
+            "tipoProducto" => $llaves,
+            "statusProducto" => $statusProducto,
+            "catalogo" => $catalogo,
+            "data" => $data
+        ];
+        $this->vista("admonProductosAltaVista", $datos);
+    }
+    public function baja($id = "")
+    {
+        //Leemos las llaves del producto
+        $llaves = $this->modelo->getLlaves("tipoProducto");
+
+        //Leemos los estatus del producto
+        $statusProducto = $this->modelo->getLlaves("statusProducto");
+
+        //Leemos los catalogos del producto
+        $catalogo = $this->modelo->getCatalogo();
+
+        //Leemos los datos del registro del id
+        $data = $this->modelo->getProductoId($id);
+
+        //vista alta
+        $datos = [
+            "titulo" => "Administrativo Productos baja",
+            "subtitulo" => "baja de producto",
+            "menu" => false,
+            "admon" => true,
+            "errores" => [],
+            "tipoProducto" => $llaves,
+            "statusProducto" => $statusProducto,
+            "catalogo" => $catalogo,
+            "data" => $data,
+            "baja" => true
+        ];
+        $this->vista("admonProductosAltaVista", $datos);
+    }
+
+    public function bajaLogica($id = "")
+    {
+        if (isset($id)) {
+            if ($this->modelo->bajaLogica($id)) {
+                header("location:" . RUTA . "admonProductos");
+            }
+        }
     }
 }
