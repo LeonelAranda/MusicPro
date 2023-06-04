@@ -66,7 +66,7 @@
                 print "<ul class='nav navbar-nav navbar-right'>";
                 //
                 print "<li class='nav-item'>";
-                print "<a href='" . RUTA . "logout' class='nav-link ";
+                print "<a href='" . RUTA . "tienda/logout' class='nav-link ";
                 if (isset($datos["activo"]) && $datos["activo"] == "cerrarsesion") print "active";
                 print "'>Cerrar sesion</a>";
                 print "</li>";

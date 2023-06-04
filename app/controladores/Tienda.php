@@ -15,9 +15,11 @@ class Tienda extends Controlador
     {
         $sesion = new Sesion();
         if ($sesion->getLogin()) {
-            //var_dump($sesion->getUsuario()); //para verificar que devuelve datos
+            //Leer los mas vendidos
+            $data = $this->getMasVendidos();
             $datos = [
                 "titulo" => "Bienvenido a MusicPro",
+                "data" => $data,
                 "activo" => "cuerda",
                 "menu" => true
             ];
@@ -30,5 +32,25 @@ class Tienda extends Controlador
             $this->vista("tiendaVista", $datos);
             // header("location:" . RUTA);
         }
+    }
+
+    public function logout()
+    {
+        session_start();
+        if (isset($_SESSION["usuario"])) {
+            $session = new Sesion();
+            $session->finalizarLogin();
+        }
+        header("location:" . RUTA);
+    }
+
+    public function getMasVendidos()
+    {
+        $data = array();
+        require_once "AdmonProductos.php";
+        $productos = new AdmonProductos();
+        $data = $productos->getMasVendidos();
+        unset($productos);
+        return $data;
     }
 }

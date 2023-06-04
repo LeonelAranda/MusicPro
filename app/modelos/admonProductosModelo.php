@@ -97,9 +97,16 @@ class AdmonProductosModelo
         $sql .= "0, "; //baja
         $sql .= "(NOW()), "; //creado_dt
         $sql .= "'', "; //creado_dt
-        $sql .= "'') "; //baja_dt
+        $sql .= "'', "; //baja_dt
+        $sql .= "masvendido='" . $data['masvendido'] . "') ";  //masvendido
 
         print $sql;
         return $this->db->queryNoSelect($sql);
+    }
+    public function getMasVendidos()
+    {
+        $sql = "SELECT * FROM productos WHERE masvendido=1 AND baja=0 LIMIT 8";
+        $data = $this->db->querySelect($sql);
+        return $data;
     }
 }

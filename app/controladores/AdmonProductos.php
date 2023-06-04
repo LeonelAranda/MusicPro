@@ -235,4 +235,26 @@ class AdmonProductos extends Controlador
             }
         }
     }
+
+    public function getMasVendidos()
+    {
+        return $this->modelo->getMasVendidos();
+    }
+
+    public function producto($id = '')
+    {
+        //Leemos los datos del registro del id
+        $data = $this->modelo->getProductoId($id);
+
+        $datos = [
+            "titulo" => "Productos",
+            "subtitulo" => $data["nombre"],
+            "menu" => true,
+            "admon" => false,
+            "errores" => [],
+            "data" => $data
+        ];
+
+        $this->vista("productoVista", $datos);
+    }
 }

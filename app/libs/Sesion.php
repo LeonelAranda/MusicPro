@@ -29,6 +29,7 @@ class Sesion
     {
         unset($_SESSION["usuario"]);
         unset($this->usuario);
+        session_destroy();
         $this->login = false;
     }
 
