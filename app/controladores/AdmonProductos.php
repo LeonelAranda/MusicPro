@@ -57,7 +57,7 @@ class AdmonProductos extends Controlador
 
 
             //Recibimos la información PHP7
-            $id = $_POST['id'] ?? ""; //si existe id es una modificacion, si no existe es un alta
+            $id = trim($_POST['id'] ?? ""); //si existe id es una modificacion, si no existe es un alta
             $tipo = $_POST['tipo'] ?? "";
             $nombre = Valida::cadena($_POST['nombre'] ?? "");
             $marca = Valida::cadena($_POST['marca'] ?? "");
@@ -241,19 +241,27 @@ class AdmonProductos extends Controlador
         return $this->modelo->getMasVendidos();
     }
 
-    public function producto($id = '')
+    public function getNuevos()
+    {
+        return $this->modelo->getMasVendidos();
+    }
+
+    public function producto($id = '', $regresa = '')
     {
         //Leemos los datos del registro del id
         $data = $this->modelo->getProductoId($id);
 
         $datos = [
             "titulo" => "Productos",
-            "subtitulo" => $data["nombre"],
+            "subtitulo" => $data[0]["nombre"],
             "menu" => true,
             "admon" => false,
+            "regresa" => $regresa,
             "errores" => [],
             "data" => $data
+
         ];
+
 
         $this->vista("productoVista", $datos);
     }

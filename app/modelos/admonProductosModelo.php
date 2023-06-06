@@ -109,4 +109,11 @@ class AdmonProductosModelo
         $data = $this->db->querySelect($sql);
         return $data;
     }
+
+    public function getMasNuevos()
+    {
+        $sql = "SELECT * FROM productos WHERE nuevo=1 AND baja=0 LIMIT 8";
+        $data = $this->db->querySelect($sql);
+        return $data;
+    }
 }

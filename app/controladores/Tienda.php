@@ -17,17 +17,24 @@ class Tienda extends Controlador
         if ($sesion->getLogin()) {
             //Leer los mas vendidos
             $data = $this->getMasVendidos();
+            ///
+            ///leer los productos nuevos
+            $nuevos = $this->getNuevos();
+
+
             $datos = [
                 "titulo" => "Bienvenido a MusicPro",
                 "data" => $data,
-                "activo" => "cuerda",
+                "nuevos" => $nuevos,
+                "activo" => "",
                 "menu" => true
             ];
             $this->vista("tiendaVista", $datos);
         } else {
             $datos = [
                 "titulo" => "Bienvenido a MusicPro", //todo esto es provisorio para poder acceder a la tienda, se debe borrar
-                "menu" => false
+                "menu" => false,
+
             ];
             $this->vista("tiendaVista", $datos);
             // header("location:" . RUTA);
@@ -50,6 +57,16 @@ class Tienda extends Controlador
         require_once "AdmonProductos.php";
         $productos = new AdmonProductos();
         $data = $productos->getMasVendidos();
+        unset($productos);
+        return $data;
+    }
+
+    public function getNuevos()
+    {
+        $data = array();
+        require_once "AdmonProductos.php";
+        $productos = new AdmonProductos();
+        $data = $productos->getNuevos();
         unset($productos);
         return $data;
     }

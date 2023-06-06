@@ -15,7 +15,7 @@
 
 <body>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <a href="<?php print RUTA; ?>" class="navbar-brand">MusicPro</a>
+        <a href="<?php print RUTA . "tienda"; ?>" class="navbar-brand">MusicPro</a>
         <div class="collapse navbar-collapse" id="menu">
             <?php if ($datos["menu"]) {
                 print "<ul class='navbar-nav mr-auto mt-2 mt-lg-0'>";
@@ -46,13 +46,13 @@
 
                 print "<li class='nav-item'>";
                 print "<a href='" . RUTA . "accesoriosvarios' class='nav-link ";
-                if (isset($datos["activo"]) && $datos["activo"] == "accesoriosvarios") print "active";
+                if (isset($datos["activo"]) && $datos["activo"] == "accesoriosVarios") print "active";
                 print "'>Accesorios Varios</a>";
                 print "</li>";
 
                 print "<li class='nav-item'>";
-                print "<a href='" . RUTA . "sobrenosotros' class='nav-link ";
-                if (isset($datos["activo"]) && $datos["activo"] == "sobrenosotros") print "active";
+                print "<a href='" . RUTA . "sobremi' class='nav-link ";
+                if (isset($datos["activo"]) && $datos["activo"] == "sobremi") print "active";
                 print "'>Sobre nosotros</a>";
                 print "</li>";
 
@@ -63,6 +63,8 @@
                 print "</li>";
                 print "</ul>";
                 //
+                //formulario lado derecho
+                //
                 print "<ul class='nav navbar-nav navbar-right'>";
                 //
                 print "<li class='nav-item'>";
@@ -70,6 +72,12 @@
                 if (isset($datos["activo"]) && $datos["activo"] == "cerrarsesion") print "active";
                 print "'>Cerrar sesion</a>";
                 print "</li>";
+            ?>
+                <form action="<?php print RUTA; ?>buscar/producto" class="form-inline" method="POST">Buscar:
+                    <input type="text" name="buscar" id="buscar" class="form-control" size="20" placeholder="Buscar un producto">
+                    <button type="submit" class="btn btn-light">ir</button>
+                </form>
+            <?php
                 print "</ul>";
             }
             if (isset($datos["admon"])) {
