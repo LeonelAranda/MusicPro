@@ -1,7 +1,7 @@
 <?php include_once("encabezado.php"); ?>
 
 <h2 class="text-center">Registro</h2>
-<form action="<?php print RUTA; ?>login/registro" method="POST">
+<form action="<?php print RUTA; ?>login/registro/" method="POST">
     <div class="form-group text-left">
         <label for="nombre">* Nombre:</label>
         <input type="text" name="nombre" id="nombre" class="form-control" required placeholder="Escriba su nombre" value='<?php isset($datos["data"]["nombre"]) ? print $datos["data"]["nombre"] : "";
@@ -55,7 +55,7 @@
 
     <div class="form-group text-left">
         <label for="enviar"></label>
-        <input type="submit" value="Enviar datos" id="pais" class="btn btn-success" role="button">
+        <input type="submit" value="Enviar datos" class="btn btn-success" role="button">
         <a href="<?php print RUTA; ?>login/" class="btn btn-info">Cancelar</a>
     </div>
 

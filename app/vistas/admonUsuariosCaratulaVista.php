@@ -27,4 +27,5 @@
 </div><!--card-->
 <a href="<?php print RUTA; ?>admonUsuarios/alta" class="btn btn-success">Dar de alta un usuario</a>
 
+
 <?php include_once("piepagina.php"); ?>
