@@ -230,6 +230,7 @@ class AdmonProductos extends Controlador
     public function bajaLogica($id = "")
     {
         if (isset($id)) {
+
             if ($this->modelo->bajaLogica($id)) {
                 header("location:" . RUTA . "admonProductos");
             }
@@ -246,23 +247,27 @@ class AdmonProductos extends Controlador
         return $this->modelo->getMasVendidos();
     }
 
+
     public function producto($id = '', $regresa = '')
     {
         //Leemos los datos del registro del id
         $data = $this->modelo->getProductoId($id);
 
+        //enviamos el id del usuario
+        $sesion = new Sesion();
+        $idUsuario = $_SESSION["usuario"]["id"];
+
         $datos = [
             "titulo" => "Productos",
             "subtitulo" => $data[0]["nombre"],
+            "id" => ["id"],
             "menu" => true,
             "admon" => false,
             "regresa" => $regresa,
+            "idUsuario" => $idUsuario,
             "errores" => [],
             "data" => $data
-
         ];
-
-
         $this->vista("productoVista", $datos);
     }
 }

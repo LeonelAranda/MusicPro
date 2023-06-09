@@ -168,7 +168,7 @@
                 <?php
                 if (isset($datos["baja"])) {
                 ?>
-                    <a href="<?php print RUTA; ?>admonProductos/bajaLogica/<?php print $datos['data']['id']; ?>" class="btn btn-danger">Borrar</a> <a href="<?php print RUTA; ?>admonProductos" class="btn btn-danger">regresar</a>
+                    <a href="<?php print RUTA; ?>admonProductos/bajaLogica/<?php print $datos['data'][0]['id']; ?>" class="btn btn-danger">Borrar</a> <a href="<?php print RUTA; ?>admonProductos" class="btn btn-danger">regresar</a>
                     <p><b>Advertencia: Una vez borrado el registro no podrá recuperar la información.</b></p>
                 <?php } else { ?>
                     <input type="submit" value="Enviar" class="btn btn-success">

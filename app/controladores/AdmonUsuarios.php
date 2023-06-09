@@ -105,9 +105,39 @@ class AdmonUsuarios extends Controlador
         }
     }
 
-    public function baja()
+    public function baja($id = "")
     {
-        print "Usuarios admon baja";
+
+        //Definiendo arreglos
+        $errores = array();
+        $data = array();
+
+        //Recibiendo de la vista
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+            $id = isset($_POST['id']) ? $_POST['id'] : "";
+            if (!empty($id)) {
+                $errores = $this->modelo->bajaLogica($id);
+
+                //Si no hay errores regresamos
+                if (empty($errores)) {
+                    header("location:" . RUTA . "admonUsuarios");
+                }
+            }
+        }
+
+        $data = $this->modelo->getUsuarioId($id);
+        $llaves = $this->modelo->getLlaves("admonStatus");
+
+        //Abrir la vista
+        $datos = [
+            "titulo" => "Administrativo Usuarios Baja",
+            "menu" => false,
+            "admon" => true,
+            "status" => $llaves,
+            "errores" => $errores,
+            "data" => $data
+        ];
+        $this->vista("admonUsuariosBorraVista", $datos);
     }
 
     public function cambio($id = "")

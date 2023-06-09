@@ -51,4 +51,9 @@ if ($datos["data"][0]["tipo"] == 1) {
 }
 $regresa = ($datos["regresa"] == "") ? "tienda" : $datos["regresa"];
 print "<a href='" . RUTA . $regresa . "' class='btn btn-success'/>Regresa</a>";
+print "&nbsp";
+print "<a href='" . RUTA . "carrito/agregaProducto ";
+print $datos["data"][0]["id"] . "/";  //id vista
+print $datos["idUsuario"] . "' ";  //id del usuario
+print "class='btn btn-success'/>Agregar al carrito</a>";
 include_once("piepagina.php");

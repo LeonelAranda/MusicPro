@@ -7,7 +7,7 @@
             <th>id</th>
             <th>Nombre</th>
             <th>Correo</th>
-            <th>Modificar</th>
+            <!--<th>Modificar</th>-->
             <th>Borrar</th>
         </thead>
         <tbody>
@@ -17,8 +17,10 @@
                 print "<td>" . $datos["data"][$i]["id"] . "</td>";
                 print "<td class='text-left'>" . $datos["data"][$i]["nombre"] . "</td>";
                 print "<td class='text-left'>" . $datos["data"][$i]["correo"] . "</td>";
-                print "<td><a href='" . RUTA . "admonUsuarios/cambio/" . $datos["data"][$i]["id"] . "' class='btn btn-info'>Modificar</a></td>";
-                print "<td><a href='' class='btn btn-danger'>Borrar</a></td>";
+                //print "<td><a href='" . RUTA . "admonUsuarios/cambio/" . $datos["data"][$i]["id"] . "' class='btn btn-info'>Modificar</a></td>";
+                //print "<td><a href='' class='btn btn-danger'>Borrar</a></td>";
+                print "<td><a href='" . RUTA . "admonUsuarios/baja/" . $datos["data"][$i]["id"] . "' class='btn btn-danger'>Borrar</a></td>";
+
                 print "</tr>";
             }
             ?>
